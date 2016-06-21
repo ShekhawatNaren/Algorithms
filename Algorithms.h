@@ -24,13 +24,13 @@ namespace MyAlgos {
 	}
 
 	template<typename RandomAccessIterator>
-	void qsort(RandomAccessIterator _First, RandomAccessIterator _Last,vector<int>& v) {
+	void qsort(RandomAccessIterator _First, RandomAccessIterator _Last) {
 		if (_First < _Last) {
 			RandomAccessIterator pIter = randomized_partition(_First, _Last);
 			if(pIter>_First)
-				qsort(_First, pIter - 1,v);
+				qsort(_First, pIter - 1);
 			if(pIter<_Last)
-				qsort(pIter + 1, _Last,v);
+				qsort(pIter + 1, _Last);
 		}
 	}
 }
