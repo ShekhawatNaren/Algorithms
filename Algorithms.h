@@ -12,16 +12,23 @@ namespace MyAlgos {
 			randomIter = rand() % distance + _First;
 		}
 		std::swap(*randomIter, *_Last);
-		
+		size_t nElem = 0;
 		//Partition the container around the partition element
 		RandomAccessIterator smallIter = _First;
 		for (; _First <= _Last-1; ++_First) {
 			if (*_First <= *_Last) {
+				//Handle the case when elements are all same to avoid n-1,1 split and make it n/2 split
+				if (*_First == *_Last) {
+					nElem++;
+				}
 				std::swap(*smallIter, *_First);
 				++smallIter;
 			}
 		}
-		std::swap(*smallIter, *_Last);
+		if (nElem == distance)
+			smallIter = _Last - (distance / 2);
+		else
+			std::swap(*smallIter, *_Last);
 		return smallIter;
 	}
 
