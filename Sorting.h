@@ -68,29 +68,21 @@ namespace MyAlgos {
 		}
 	}
 
-	/*
-	insertion sort algorithm (in-place)
-	*/
-	template<typename BidirectionalIterator>
-	void insertion_sort(BidirectionalIterator _First, BidirectionalIterator _Last) {
-		if (_First == _Last)
-			return;
-		BidirectionalIterator right = std::next(_First);
-		for (; right <= _Last; ++right) {
-			BidirectionalIterator left = std::prev(right);
-			auto key = *right;
-			bool flag = true;
-			while( flag && left >= _First && *left > key) {
-				*(left + 1) = *left;
-				if (left != _First)
-					--left;
-				else
-					flag = false;
+	//The container should have a bidirectional iterator
+	//Binary function that accepts two elements in the range as arguments, and returns a value convertible to bool. 
+	//The value returned indicates whether the element passed as first argument is considered to go 
+	//before the second in the specific strict weak ordering
+	template<typename BidirectionalIterator, typename Comparator>
+	void insertion_sort(BidirectionalIterator start, BidirectionalIterator end, Comparator compare) {
+		BidirectionalIterator current = start + 1;
+		while (current != end) {
+			BidirectionalIterator temp = current;
+			while (current != start && compare(*(current - 1), *current) == 1) {
+				std::swap(*(current - 1), *current);
+				--current;
 			}
-			if (flag)
-				*(left + 1) = key;
-			else
-				*left = key;
+			//move current to next element
+			current = temp + 1;
 		}
 	}
 }
